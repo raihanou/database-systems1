@@ -1,0 +1,25 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Display JSON Data</title>
+</head>
+<body>
+    <h1>JSON Data from MongoDB</h1>
+    <a href="{% url 'home' %}">Home</a>
+    <ul>
+        {% for document in documents %}
+            <li>
+                <!-- Display document fields -->
+                <strong>Floor Space:</strong> {{ document.floorSpace }}<br>
+                <strong>Floors:</strong> {{ document.floors }}<br>
+                <strong>Bedrooms:</strong> {{ document.bedRooms }}<br>
+                <strong>Bathrooms:</strong> {{ document.bathRooms }}<br>
+                <strong>Land Size:</strong> {{ document.landSize }}<br>
+                <strong>Year Constructed:</strong> {{ document.yearConstructed }}<br>
+            </li>
+        {% endfor %}
+    </ul>
+
+</body>
+</html>
