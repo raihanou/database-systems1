@@ -4,9 +4,9 @@ from djongo import models
 
 class Agents(models.Model):
     agentID = models.IntegerField()
-    name = models.CharField()
+    name = models.CharField(max_length=100)
     commissionRate = models.IntegerField()
-    company = models.CharField()
+    company = models.CharField(max_length=100)
     
     def __str__(self):
         return self.name

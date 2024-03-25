@@ -10,6 +10,7 @@ urlpatterns = [
     path("move_from_sale_to_owned",views.move_from_sale_to_owned, name="move_from_sale_to_owned"),
     path("make_home_owner",views.make_home_owner, name="make_home_owner"),
     path("filter_homes",views.filter_homes, name="filter_homes"),
+    
 ]
 
 

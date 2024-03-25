@@ -78,6 +78,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'CSI5450',
+        'ENFORCE_SCHEMA': False,  # Optional: Djongo specific option
+        'CLIENT': {
+            'host': 'mongodb://localhost:27017/CSI5450'
+        }
     }
 }
 

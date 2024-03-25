@@ -17,8 +17,8 @@
         <div class="side-bar">
             <button onclick="showAddAgentForm()">Add Agent</button>
             <button onclick="showAddHomeForm()">Add Home</button>
-            <button>Make Owner</button>
-            <button>For Sales to Owned</button>
+            <button onclick="showMakeOwnerForm()" >Make Owner</button>
+            <button onclick="showMoveHomeForm()">From Sales To Owned</button>
         </div>
         <div class="search-area">
             <select id="agent-select">
@@ -31,9 +31,9 @@
             </select>
             <select id="price-select">
                 <option value="">Price Range</option>
-                <option value="10k-50k">10k - 50k</option>
-                <option value="50k-100k">50k - 100k</option>
-                <option value="100k-500k">100k - 500k</option>
+                <option value="10k-50k">100000 - 500000</option>
+                <option value="50k-100k">500000 - 1000000</option>
+                <option value="100k-500k">1000000 - 5000000</option>
             </select>
             <select id="city-select">
                 <option value="">City</option>
@@ -43,9 +43,10 @@
             </select>
             <select id="home-type-select">
                 <option value="">Home Type</option>
-                <option value="Single">Single</option>
-                <option value="Quad">Quad</option>
-                <option value="Colonial">Colonial</option>
+                <option value="Mansions">Mansions</option>
+                <option value="Apartments">Apartments</option>
+                <option value="Townhomes">Townhomes</option>
+                <option value="Condos">Condos</option>
             </select>
             <button onclick="search()">Search</button>
         </div>
@@ -58,6 +59,10 @@
               <option value="q3">Find owners who do not own the homes they used to own. </option>
               <option value="q4">Find people who own apartments as well as mansions. </option>
               <option value="q5">Find home with two floors. </option>
+              <option value="q6">List owners who own all the most expensive homes in a given city. </option>
+              <option value="q7">Find the most expensive home an owner ever bought. </option>
+              <option value="q8">List all the homes below a price in a given city. </option>
+              <option value="q9">Find homes that up for sale in a given city that meet certain buyer choices such as number of bedrooms, baths, etc </option>
             </select>
             <br><br>
             <input type="submit" value="Submit">
@@ -86,6 +91,7 @@
                 <input type="submit" value="Submit">
             </form>
         </div>
+        
     </div>
 
     <!-- Add Home Modal -->
@@ -93,25 +99,82 @@
         <div class="modal-content">
             <span class="close" onclick="closeAddHomeForm()">&times;</span>
             <h2>Add Home</h2>
-            <form action="/addHome" method="POST" id="addHomeForm" onsubmit="event.preventDefault(); addHome()">
+            <form action="/addHome" method="POST" id="addHomeForm">
                 <label for="homeAddress">Address:</label>
-                <input type="text" id="homeAddress" name="homeAddress" required><br>
+                 <input type="text" id="homeAddress" name="homeAddress" required><br>
                 <label for="homeLocation">Location:</label>
-                <input type="text" id="homeLocation" name="homeLocation" required><br>
+                 <input type="text" id="homeLocation" name="homeLocation" required><br>
                 <label for="homeType">Home Type:</label>
-                <select id="homeType" name="homeType" required>
-                    <option value="Single">Single</option>
-                    <option value="Quad">Quad</option>
-                    <option value="Colonial">Colonial</option>
-                </select><br>
+                  <select id="homeType" name="homeType" required>
+                    <option value="Mansions">Mansions</option>
+                    <option value="Apartments">Apartments</option>
+                    <option value="Townhomes">Townhomes</option>
+                    <option value="Condos">Condos</option>
+                  </select><br>
+                  <input type="options" id="homeType" name="homeType" required><br>
                 <label for="homeYear">Year Built:</label>
-                <input type="number" id="homeYear" name="homeYear" required><br>
+                 <input type="number" id="homeYear" name="homeYear" required><br>
                 <label for="homePrice">Price:</label>
-                <input type="number" id="homePrice" name="homePrice" required><br>
+                 <input type="number" id="homePrice" name="homePrice" required><br>
+                <label for="floorSpace">Floor Space:</label>
+                 <input type="number" id="floorSpace" name="floorSpace" required><br>
+                <label for="floors">Floors:</label>
+                 <input type="number" id="floors" name="floors" required><br>
+                <label for="bedRooms">Bedrooms:</label>
+                 <input type="number" id="bedRooms" name="bedRooms" required><br>
+                <label for="bathRooms">Bathrooms:</label>
+                 <input type="number" id="bathRooms" name="bathRooms" required><br>
+                <label for="landSize">Land Size:</label>
+                 <input type="number" id="landSize" name="landSize" required><br>
+                <label for="homeId">Home ID:</label>
+                 <input type="number" id="homeId" name="homeId" required><br>
+                <label for="owner">Owner:</label>
+                 <input type="text" id="owner" name="owner" required><br>
+                <label for="preowned">Pre-owned:</label>
+                 <input type="number" id="preowned" name="preowned" required><br>
+                <label for="appliances">Appliances:</label>
+                 <input type="text" id="appliances" name="appliances" required><br>
+                <label for="city">City:</label>
+                 <input type="text" id="city" name="city" required><br>
                 <input type="submit" value="Submit">
             </form>
         </div>
     </div>
+<!-- Form to move a home from "For Sale" to "Owned" -->
+<div class="modal" id="moveHomeModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeMoveHomeForm()">&times;</span>
+        <h2>Move Home to Owned</h2>
+        <form action="/move_from_sale_to_owned" method="POST" id="move_from_sale_to_ownedForm">
+            <label for="homeId">Home ID:</label>
+            <input type="number" id="homeId" name="homeId" required><br>
+            
+            <label for="owner">New Owner ID:</label>
+            <input type="text" id="owner" name="owner" required><br>
+            
+            <input type="submit" value="Move to Owned">
+        </form>
+    </div>
+</div>
+
+
+
+!-- Make Owner Modal -->
+<div class="modal" id="makeOwnerModal">
+    <div class="modal-content">
+        <span class="close" onclick="closeMakeOwnerForm()">&times;</span>
+        <h2>Make Owner</h2>
+        <form action="/make_home_owner" method="POST" id="make_home_ownerForm">
+            <label for="homeId">Home ID:</label>
+            <input type="number" id="homeId" name="homeId" required><br>
+
+            <label for="owner">New Owner ID:</label>
+            <input type="text" id="owner" name="owner" required><br>
+
+            <input type="submit" value="Make Owner">
+        </form>
+    </div>
+</div>
 
     <script>
         // Sample data for agents and owners
@@ -177,16 +240,77 @@
             var type = document.getElementById("homeType").value;
             var year = document.getElementById("homeYear").value;
             var price = document.getElementById("homePrice").value;
+            var floorspace = document.getElementById("floorSpace").value;
+            var floors = document.getElementById("floors").value;
+            var bedrooms = document.getElementById("bedRooms").value;
+            var bathrooms = document.getElementById("bathRooms").value;
+            var homeid = document.getElementById("homeId").value;
+            var owner = document.getElementById("owner").value;
+            var preowned = document.getElementById("preowned").value;
+            var appliances = document.getElementById("appliances").value;
+            var city = document.getElementById("city").value;
+            var landsize = document.getElementById("landSize").value;
+
+
+
 
             console.log("Added Home:");
             console.log("Address:", address);
             console.log("Location:", location);
             console.log("Type:", type);
             console.log("Year Built:", year);
+            console.log("Floor Space:", floorspace);
+            console.log("Floors:", floors);
             console.log("Price:", price);
+            console.log("Bed Rooms:", bedrooms);
+            console.log("Bath Rooms:", bathrooms);
+            console.log("Home ID:", homeid);
+            console.log("Owner:", owner);
+            console.log("Preowned:", preowned);
+            console.log("Appliances:", appliances);
+            console.log("Land Size:", landsize);
+            console.log("City:", city);
 
             closeAddHomeForm();
         }
+        function showMoveHomeForm() {
+            document.getElementById("moveHomeModal").style.display = "block";
+        }
+
+        function closeMoveHomeForm() {
+            document.getElementById("moveHomeModal").style.display = "none";
+        }
+        
+        function move_from_sale_to_owned()
+        {
+        var homeid = document.getElementById("homeId").value;
+        var owner = document.getElementById("owner").value;
+        console.log("Home ID:", homeid);
+        console.log("Owner:", owner);
+        closeMoveHomeForm()
+        }
+         // Functions to show and close Make Owner form
+         function showMakeOwnerForm() {
+            document.getElementById("makeOwnerModal").style.display = "block";
+        }
+
+        function closeMakeOwnerForm() {
+            document.getElementById("makeOwnerModal").style.display = "none";
+        }
+
+        // Stub function for Make Owner action
+        function makeOwner() {
+            var homeId = document.getElementById("homeId").value;
+            var ownerId = document.getElementById("owner").value;
+
+            // Here you would typically send this data to the server to update the home's owner
+            console.log("Making owner:", ownerId, "for home ID:", homeId);
+
+            closeMakeOwnerForm();
+        }
+
+        
+        
     </script>
 </body>
 </html>

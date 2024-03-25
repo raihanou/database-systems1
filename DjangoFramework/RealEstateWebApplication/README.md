@@ -12,6 +12,7 @@ Prerequisite:- Python should be installed.
     d) pip install djongo
     e) pip install pytz
     d) cd RealEstateWebApplication  (navigate into cloned code root directory)
+
 7) Open MongoDb Compass and make sure database with name CSI5450 exists.
 8) GO back to VS code terminal and execute below commands- (Location is the root of the project code where manage.py file exists.)
     a) python manage.py makemigrations
