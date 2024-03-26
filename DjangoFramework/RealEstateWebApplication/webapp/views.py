@@ -1,15 +1,31 @@
+import pymongo
+
+
 from django.shortcuts import render
 from webapp.owners import Owners
 from webapp.homes import Homes
 from webapp.agents import Agents
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
-
+from django.http import JsonResponse
 
 
 def home(request):
     context={}
-    return render(request, "webapp/index.html",context)
+    
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    db = client["CSI5450"]
+    collection = db["webapp_homes"]
+
+    # Retrieve data from MongoDB
+    data_from_mongo1 = collection.find({}, {"_id": 0, "owner": 1}) # Assuming you want to retrieve the "name" field
+    # data_from_mongo = collection.distinct('owner') # Assuming you want to retrieve the "name" field
+    # print(data_from_mongo)
+    data_from_mongo = set(item['owner'] for item in data_from_mongo1)
+    
+
+
+    return render(request, "webapp/index.html", {'data_from_mongo': data_from_mongo})
     
 @csrf_exempt    
 def addAgent(request):
@@ -91,13 +107,39 @@ def search_homes(request):
         'homes': homes
     }
     return render(request, 'home_search_results.html', context) 
+
+
+@csrf_exempt    
+def searchQuery(request):
+    context = {}
+    agent=None
+    home_t=None
+    # if request.method == 'POST':
+    if request.POST.get('city-select')!=None:
+        city=request.POST.get('city-select')
+    if request.POST.get('price-select')!=None:
+        price=request.POST.get('price-select')
+    if request.POST.get('owner-select')!=None:
+        owner=request.POST.get('owner-select')
+    if request.POST.get('agent-select')!=None:
+        agent=request.POST.get('agent-select')
+    if request.POST.get('home-type-select')!=None:
+        home_t=request.POST.get('home-type-select')
     
+    # city='Troy'
+    # price = 222
+    print(city)
+    query_result = Homes.get_homes_filtered(owner, city, price, home_t)
+    
+    return render(request, "webapp/jsondisplaypage.html", {'documents': query_result})
+
+      
 @csrf_exempt    
 def preDefinedQuery(request):
     context={}
-    
+
     if request.method == 'POST':
-        selected_option = request.POST.get('selected_option')
+        selected_option = request.POST.get('query')
 
         if selected_option == 'q1':
             query_result=Homes.get_homes_two_floors(2)
@@ -110,6 +152,18 @@ def preDefinedQuery(request):
     
         elif selected_option == 'q4':
             query_result=Homes.get_People_With_Apts_Mansions()
+            homes_data = []
+            for home in query_result:
+                home_info = {
+                    'id': home.homeId,
+                    'type': home.htype
+                }
+                homes_data.append(home_info)
+            print(homes_data)
+            # query_result = homes_data
+            # homes_data = [{'id': home.homeId, 'type': home.htype} for home in query_result1]
+            # query_result=JsonResponse({"homes":homes_data})
+
             
         elif selected_option == 'q5':
             query_result=Homes.get_homes_two_floors(2)
@@ -121,7 +175,9 @@ def preDefinedQuery(request):
             query_result = Homes.get_most_expensive_home_for_owner()
         
         elif selected_option == 'q8':
-            query_result = Homes.get_homes_below_price_in_given_city()
+            city=request.POST.get('city-select')
+            price=request.POST.get('price-select')
+            query_result = Homes.get_homes_below_price_in_given_city(city, price)
         
         elif selected_option == 'q9':
             query_result = Homes.find_homes_for_sale()

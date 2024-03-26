@@ -21,35 +21,39 @@
             <button onclick="showMoveHomeForm()">From Sales To Owned</button>
         </div>
         <div class="search-area">
-            <select id="agent-select">
-                <option value="">Agent</option>
-                <!-- Options will be dynamically populated here -->
-            </select>
-            <select id="owner-select">
-                <option value="">Owner</option>
-                <!-- Options will be dynamically populated here -->
-            </select>
-            <select id="price-select">
-                <option value="">Price Range</option>
-                <option value="10k-50k">100000 - 500000</option>
-                <option value="50k-100k">500000 - 1000000</option>
-                <option value="100k-500k">1000000 - 5000000</option>
-            </select>
-            <select id="city-select">
-                <option value="">City</option>
-                <option value="Troy">Troy</option>
-                <option value="Rochester Hills">Rochester Hills</option>
-                <option value="Auburn Hills">Auburn Hills</option>
-            </select>
-            <select id="home-type-select">
-                <option value="">Home Type</option>
-                <option value="Mansions">Mansions</option>
-                <option value="Apartments">Apartments</option>
-                <option value="Townhomes">Townhomes</option>
-                <option value="Condos">Condos</option>
-            </select>
-            <button onclick="search()">Search</button>
-        </div>
+            <form method="POST" action="/searchQuery">
+                <select id="agent-select" name='agent-select'>
+                    <option value="">Agent</option>
+                    <!-- Options will be dynamically populated here -->
+                </select>
+                <select id="owner-select" name='owner-select'>
+                    <option value="">Owner</option>
+                    {% for item in data_from_mongo %}
+                    <option value="{{ item }}">{{ item }}</option>
+                    {% endfor %}
+                </select>
+                <select id="price-select" name='price-select'>
+                    <option value="">Price Range</option>
+                    <option value="500000">500000</option>
+                    <option value="1000000">1000000</option>
+                    <option value="5000000">5000000</option>
+                </select>
+                <select id="city-select" name='city-select'>
+                    <option value="">City</option>
+                    <option value="Troy">Troy</option>
+                    <option value="Rochester Hills">Rochester Hills</option>
+                    <option value="Auburn Hills">Auburn Hills</option>
+                </select>
+                <select id="home-type-select" name='home-type-select'>
+                    <option value="">Home Type</option>
+                    <option value="Mansions">Mansions</option>
+                    <option value="Apartments">Apartments</option>
+                    <option value="Townhomes">Townhomes</option>
+                    <option value="Condos">Condos</option>
+                </select>
+                <button type="submit">Search</button>
+            </form>
+        </div> 
         <div>
         <form action="/preDefinedQuery" method="POST">
             <label for="query">Choose a query:</label>
@@ -111,7 +115,6 @@
                     <option value="Townhomes">Townhomes</option>
                     <option value="Condos">Condos</option>
                   </select><br>
-                  <input type="options" id="homeType" name="homeType" required><br>
                 <label for="homeYear">Year Built:</label>
                  <input type="number" id="homeYear" name="homeYear" required><br>
                 <label for="homePrice">Price:</label>
@@ -179,7 +182,7 @@
     <script>
         // Sample data for agents and owners
         var agents = ["Agna Antony", "Chaitra Kalasavalli", "Gowthami Gundala"];
-        var owners = ["John Doe", "Jane Smith", "Michael Johnson"];
+        {% comment %} var owners = ["ys", "yam"]; {% endcomment %}
 
         // Populate agent and owner select elements
         function populateSelect(selectId, options) {
@@ -193,7 +196,7 @@
         }
 
         populateSelect("agent-select", agents);
-        populateSelect("owner-select", owners);
+        {% comment %} populateSelect("owner-select", owners); {% endcomment %}
 
         // Functions to show and close add agent form
         function showAddAgentForm() {

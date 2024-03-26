@@ -28,7 +28,6 @@ class Homes(models.Model):
 
  
     @staticmethod
-   
     def save_new_home(floorSpace, floors, bedRooms, bathRooms, landSize, yearConstructed, homeId, htype, price, owner, city, preowned, appliances):
     # Create a new Homes object with the desired values
      new_home = Homes(
@@ -66,26 +65,56 @@ class Homes(models.Model):
         return
     
     @staticmethod
-    def get_most_expensive_home_for_owner(name):
-        queryset = Homes.objects.filter(owner=name)
-        queryset=queryset.order_by('-price')
+    def get_most_expensive_home_for_owner():
+        # queryset = Homes.objects.filter(owner=owner_name)
+        # queryset=queryset.order_by('-price')
+        queryset=Homes.objects.order_by('-price')
         most_expensive_home = queryset.first()
         print(queryset.query.__str__())  # Print the generated SQL query
-        return queryset.filter(pk=most_expensive_home.pk)
-    
+        return queryset.filter(price=most_expensive_home.price)
     @staticmethod
     def get_homes_owned_by_owner_in_city(owner_name, city_name):
         queryset = Homes.objects.filter(owner=owner_name, city=city_name)
         return queryset
     
     @staticmethod
+    def get_homes_filtered(owner, city, price, home_t):
+        filtered_homes = Homes.objects.all()
+        if owner:
+            filtered_homes = filtered_homes.filter(owner=owner)
+
+        if city:
+            filtered_homes = filtered_homes.filter(city=city)
+
+        if home_t:
+            filtered_homes = filtered_homes.filter(htype=home_t )
+
+        if price:
+            filtered_homes = filtered_homes.filter(price__lte=price)
+
+        # queryset = Homes.objects.filter(owner=owner).filter(city=city).filter(htype=home_t).filter(price__lt=price)
+        # print(queryset)
+        return filtered_homes
+    
+    @staticmethod
+    
     def get_People_With_Apts_Mansions():
-        queryset = Homes.objects.filter(htype="Apartments").filter(htype="Mansions").distinct()
-        return queryset
+        apartments = set(Homes.objects.filter(htype="Apartments").values_list("owner", flat=True).distinct())
+        mansions = set(Homes.objects.filter(htype="Mansions").values_list("owner", flat=True).distinct())
+        print(type(apartments))
+        print(mansions)
+        # Find the intersection of owners who own both types
+        users_with_both_types = apartments.intersection(mansions)
+        # Retrieve homes owned by users with both types'
+        homes = Homes.objects.filter(owner__in=users_with_both_types).filter(htype__in=['Apartments', 'Mansions'])
+
+        return homes
     
     @staticmethod
     def get_homes_below_price_in_given_city(city, price):
-        queryset = Homes.objects.filter(city=city, price__lt=price)
+        # city='Troy'
+        # price = 222
+        queryset = Homes.objects.filter(city=city, price__lt=int(price))
         return queryset
     
     @staticmethod

@@ -5,6 +5,7 @@ urlpatterns = [
     path("",views.home, name="home"),
     path("twoFloors",views.preDefinedQuery, name="preDefinedQuery"),
     path("preDefinedQuery",views.preDefinedQuery, name="preDefinedQuery"),
+    path("searchQuery",views.searchQuery, name="searchQuery"),
     path("addAgent",views.addAgent, name="addAgent"),
     path("addHome",views.addHome, name="addHome"),
     path("move_from_sale_to_owned",views.move_from_sale_to_owned, name="move_from_sale_to_owned"),
