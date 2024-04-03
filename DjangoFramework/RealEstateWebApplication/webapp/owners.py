@@ -3,7 +3,7 @@ from djongo import models
 
 
 class Owners(models.Model):
-    ssn = models.CharField(max_length=100)
+    ssn = models.CharField(max_length=100, primary_key=True)
     name = models.CharField(max_length=100)
     dependents = models.IntegerField()
     income = models.IntegerField()

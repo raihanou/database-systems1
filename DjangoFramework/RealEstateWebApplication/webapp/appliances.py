@@ -3,7 +3,7 @@ from djongo import models
 
 
 class Appliances(models.Model):
-    modelNumber = models.IntegerField()
+    modelNumber = models.CharField(max_length=100, primary_key=True)
     name = models.CharField(max_length=100)
     year = models.IntegerField()
     maker = models.CharField(max_length=100)
