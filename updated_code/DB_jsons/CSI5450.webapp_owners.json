@@ -1,0 +1,110 @@
+[{
+  "_id": {
+    "$oid": "660321b57dd9c114a48bf209"
+  },
+  "SSN": "123-45-6789",
+  "Name": "Alice Smith",
+  "Dependents": 2,
+  "Income": 75000,
+  "Age": 35,
+  "Profession": "Engineer"
+},
+{
+  "_id": {
+    "$oid": "660321b57dd9c114a48bf20a"
+  },
+  "SSN": "987-65-4321",
+  "Name": "Bob Johnson",
+  "Dependents": 3,
+  "Income": 65000,
+  "Age": 40,
+  "Profession": "Teacher"
+},
+{
+  "_id": {
+    "$oid": "660321b57dd9c114a48bf20b"
+  },
+  "SSN": "789-12-3456",
+  "Name": "Diana Garcia",
+  "Dependents": 4,
+  "Income": 80000,
+  "Age": 30,
+  "Profession": "Lawyer"
+},
+{
+  "_id": {
+    "$oid": "660321b57dd9c114a48bf20c"
+  },
+  "SSN": "234-56-7890",
+  "Name": "Eva Martinez",
+  "Dependents": 2,
+  "Income": 70000,
+  "Age": 35,
+  "Profession": "Architect"
+},
+{
+  "_id": {
+    "$oid": "660321b57dd9c114a48bf20d"
+  },
+  "SSN": "345-67-8901",
+  "Name": "Frank White",
+  "Dependents": 2,
+  "Income": 70000,
+  "Age": 38,
+  "Profession": "Accountant"
+},
+{
+  "_id": {
+    "$oid": "660321b57dd9c114a48bf20e"
+  },
+  "SSN": "901-23-4567",
+  "Name": "Grace Lee",
+  "Dependents": 3,
+  "Income": 80000,
+  "Age": 42,
+  "Profession": "Software Engineer"
+},
+{
+  "_id": {
+    "$oid": "660321b57dd9c114a48bf20f"
+  },
+  "SSN": "678-90-1234",
+  "Name": "Henry Adams",
+  "Dependents": 1,
+  "Income": 60000,
+  "Age": 45,
+  "Profession": "Professor"
+},
+{
+  "_id": {
+    "$oid": "660321b57dd9c114a48bf210"
+  },
+  "SSN": "567-89-0123",
+  "Name": "Jack Davis",
+  "Dependents": 4,
+  "Income": 85000,
+  "Age": 40,
+  "Profession": "Business Analyst"
+},
+{
+  "_id": {
+    "$oid": "66133a7dc5557b8b04e41895"
+  },
+  "SSN": "789-12-3457",
+  "Name": "Rama",
+  "Dependents": null,
+  "Income": null,
+  "Age": 40,
+  "Profession": "Builder"
+},
+{
+  "_id": {
+    "$oid": "66133b3161f9eb962c935617"
+  },
+  "SSN": "789-12-3458",
+  "Name": "Bhima",
+  "Dependents": null,
+  "Income": null,
+  "Age": 45,
+  "Profession": "Teacher"
+}]

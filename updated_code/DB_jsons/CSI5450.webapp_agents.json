@@ -1,0 +1,55 @@
+[{
+  "_id": {
+    "$oid": "660324397dd9c114a48bf221"
+  },
+  "AgentID": 1002,
+  "Name": "Jane Smith",
+  "CommissionRate": 4,
+  "Company": "Real Estate Company B"
+},
+{
+  "_id": {
+    "$oid": "660324397dd9c114a48bf222"
+  },
+  "AgentID": 1003,
+  "Name": "John Doe",
+  "CommissionRate": 3.5,
+  "Company": "Real Estate Company A"
+},
+{
+  "_id": {
+    "$oid": "660324397dd9c114a48bf223"
+  },
+  "AgentID": 1004,
+  "Name": "Emily Johnson",
+  "CommissionRate": 4.5,
+  "Company": "Real Estate Company C"
+},
+{
+  "_id": {
+    "$oid": "660324397dd9c114a48bf224"
+  },
+  "AgentID": 1005,
+  "Name": "Michael Brown",
+  "CommissionRate": 3.75,
+  "Company": "Real Estate Company A"
+},
+{
+  "_id": {
+    "$oid": "660324397dd9c114a48bf225"
+  },
+  "AgentID": 1006,
+  "Name": "Jessica Williams",
+  "CommissionRate": 4.25,
+  "Company": "Real Estate Company B"
+},
+{
+  "_id": {
+    "$oid": "66049ed08dfc3eb99ab2396c"
+  },
+  "id": 6,
+  "agentID": 1007,
+  "name": "jenny kings",
+  "commissionRate": 5,
+  "company": "Real Estate Company B"
+}]

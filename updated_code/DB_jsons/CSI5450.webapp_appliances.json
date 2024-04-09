@@ -1,0 +1,60 @@
+[{
+  "_id": {
+    "$oid": "660323707dd9c114a48bf211"
+  },
+  "modelNumber": "ABC123",
+  "name": "Refrigerator",
+  "year": 2021,
+  "maker": "LG",
+  "price": 800
+},
+{
+  "_id": {
+    "$oid": "660323707dd9c114a48bf212"
+  },
+  "modelNumber": "DEF456",
+  "name": "Washing Machine",
+  "year": 2020,
+  "maker": "LG",
+  "price": 600
+},
+{
+  "_id": {
+    "$oid": "660323707dd9c114a48bf213"
+  },
+  "modelNumber": "GHI789",
+  "name": "Microwave",
+  "year": 2022,
+  "maker": "Panasonic",
+  "price": 200
+},
+{
+  "_id": {
+    "$oid": "660323707dd9c114a48bf214"
+  },
+  "modelNumber": "JKL012",
+  "name": "Dishwasher",
+  "year": 2021,
+  "maker": "Bosch",
+  "price": 700
+},
+{
+  "_id": {
+    "$oid": "660323707dd9c114a48bf215"
+  },
+  "modelNumber": "MNO345",
+  "name": "Coffee Maker",
+  "year": 2019,
+  "maker": "Keurig",
+  "price": 150
+},
+{
+  "_id": {
+    "$oid": "660323707dd9c114a48bf216"
+  },
+  "modelNumber": "PQR678",
+  "name": "Toaster",
+  "year": 2020,
+  "maker": "Cuisinart",
+  "price": 50
+}]
