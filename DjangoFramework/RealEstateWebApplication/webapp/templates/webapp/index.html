@@ -7,87 +7,51 @@
 <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
+    <header class="header title-panel">
+        <h1 id="logo">Real Estate Platform</h1>
+        <nav class="toplinks">
+            <a href="#" class="nlinks button">Home</a>
+            <a href="#" class="nlinks button">About Us</a>
+            <a href="#" class="nlinks button">Browse homes</a>
+            <a href="#" class="nlinks button">Contact Us</a>
+        </nav>
+    </header>
+    
+<div class="back-container">
     <div class="container">
-        <div class="title-panel">
-            <h1>Real Estate Platform</h1>
-        </div>
-        <div class="nav-bar">
-            <!-- Buttons are removed from here -->
-        </div>
         <div class="side-bar">
             <button onclick="showAddAgentForm()">Add Agent</button>
             <button onclick="showAddHomeForm()">Add Home</button>
-            <button onclick="showMakeOwnerForm()" >Make Owner</button>
+            <button onclick="showMakeOwnerForm()">Make Owner</button>
             <button onclick="showMoveHomeForm()">From Sales To Owned</button>
-        </div>
-        <div class="search-area">
-            <form method="POST" action="/searchQuery">
-                <select id="agent-select" name='agent-select'>
-                    <option value="">Agent</option>
-                    {% for item in agents %}
-                    <option value="{{ item }}">{{ item }}</option>
-                    {% endfor %}
+            <form action="/preDefinedQuery" method="POST">
+                <label for="query">Choose a Query:</label>
+                <select id="query" name="query">
+                    <option value="">Select Query</option>
+                    <option value="q1">List all the homes owned by a given owner in a given city.</option>
+                    <option value="q2">List all the homes that were sold more than once.</option>
+                    <option value="q3">Find the most expensive home an owner ever bought.</option>
+                    <option value="q4">Find all the homes that include all e appliances by the same maker.</option>
+                    <option value="q5">Find owners who do not own the homes they used to own.</option>
+                    <option value="q6">Find the total commissions earned by an agent. Assume that commission earned is on the purchased price of a home he/she sells.</option>
+                    <option value="q7">Find people who own apartments as well as mansions.</option>
+                    <option value="q8">List all the homes below a price in a given city.</option>
+                    <option value="q9">List owners who own all the most expensive homes in a given city.</option>
+                    <option value="q10">Find homes that up for sale in a given city that meet certain buyer choices.</option>
                 </select>
-                <select id="owner-select" name='owner-select'>
-                    <option value="">Owner</option>
-                    {% for item in data_from_mongo %}
-                    <option value="{{ item }}">{{ item }}</option>
-                    {% endfor %}
-                </select>
-                <select id="price-select" name='price-select'>
-                    <option value="">Price Range</option>
-                    <option value="500000">500000</option>
-                    <option value="1000000">1000000</option>
-                    <option value="5000000">5000000</option>
-                </select>
-                <select id="city-select" name='city-select'>
-                    <option value="">City</option>
-                    {% for item in city %}
-                    <option value="{{ item }}">{{ item }}</option>
-                    {% endfor %}
-                </select>
-                <select id="home-type-select" name='home-type-select'>
-                    <option value="">Home Type</option>
-                    <option value="Mansions">Mansions</option>
-                    <option value="Apartments">Apartments</option>
-                    <option value="Townhomes">Townhomes</option>
-                    <option value="Condos">Condos</option>
-                </select>
-                <button type="submit">Search</button>
             </form>
-        </div> 
-        <div>
-        <form action="/preDefinedQuery" method="POST">
-            <label for="query">Choose a query:</label>
-            <select id="query" name="query">
-              <option value="q1">List all the homes that were sold more than once. </option>
-              <option value="q2">Find all the homes that include all e appliances by the same maker.</option>
-              <option value="q3">Find owners who do not own the homes they used to own. </option>
-              <option value="q4">Find people who own apartments as well as mansions. </option>
-              <option value="q5">Find home with two floors. </option>
-              <option value="q6">List owners who own all the most expensive homes in a given city. </option>
-              <option value="q7">Find the most expensive home an owner ever bought. </option>
-              <option value="q8">List all the homes below a price in a given city. </option>
-              <option value="q9">Find homes that up for sale in a given city that meet certain buyer choices such as number of bedrooms, baths, etc </option>
-            </select>
-            <br><br>
-            <input type="submit" value="Submit">
-          </form>
         </div>
-        <div>
-            
+        <div class="predefined">
+            <div id="form-container" class="hidden query-div">
+                <form id="dynamic-form" class="modal-content" method="POST">
+                    <h2>I am Dynamic form</h2>
+                </form>
+            </div>
         </div>
-
     </div>
-    <form method="post" action="/preDefinedQuery">
-        {% csrf_token %}
-        <div>
-            <label for="maker">Maker:</label>
-            <input type="text" id="maker" name="maker" required>
-        </div>
-        <button type="submit">Search</button>
-    </form>
-    <!-- Add Agent Modal -->
+</div>
+    
+    <!-- Add Agent Modal  -->
     <div class="modal" id="addAgentModal">
         <div class="modal-content">
             <span class="close" onclick="closeAddAgentForm()">&times;</span>
@@ -148,8 +112,6 @@
                  <input type="text" id="appliances" name="appliances" required><br>
                 <label for="city">City:</label>
                  <input type="text" id="city" name="city" required><br>
-                <label for="status">Status:</label>
-                 <input type="text" id="status" name="status" required><br>
                 <input type="submit" value="Submit">
             </form>
         </div>
@@ -165,15 +127,128 @@
             
             <label for="owner">New Owner ID:</label>
             <input type="text" id="owner" name="owner" required><br>
+
+            <label for="new_price">Price:</label>
+            <input type="text" id="new_price" name="new_price" required><br>
             
             <input type="submit" value="Move to Owned">
         </form>
     </div>
 </div>
+{% if documents or owners or messages or dict %}
+<div id="hello">
+    <!-- Documents Table -->
+    {% if documents %}
+    <!-- Documents Table -->
+        <table>
+            <tr>
+                <th>Floor Space</th>
+                <th>Floors</th>
+                <th>Bedrooms</th>
+                <th>Bathrooms</th>
+                <th>Land Size</th>
+                <th>Year Constructed</th>
+                <th>Home ID</th>
+                <th>Home Price</th>
+                <th>Home Type</th>
+                <th>City</th>
+                <th>Preowned</th>
+                <th>Appliances</th>
+            </tr>
+            {% for document in documents %}
+            <tr>
+                <td>{{ document.floorSpace }}</td>
+                <td>{{ document.floors }}</td>
+                <td>{{ document.bedRooms }}</td>
+                <td>{{ document.bathRooms }}</td>
+                <td>{{ document.landSize }}</td>
+                <td>{{ document.yearConstructed }}</td>
+                <td>{{ document.homeId }}</td>
+                <td>{{ document.price }}</td>
+                <td>{{ document.htype }}</td>
+                <td>{{ document.city }}</td>
+                <td>{{ document.preowned }}</td>
+                <td>{{ document.appliances }}</td>
+            </tr>
+            {% endfor %}
+    </table>
+{% endif %}
+
+
+    <!-- Owners Table -->
+    <!-- Check if 'owners' has content -->
+<!-- Owners Table -->
+    <!-- Check if 'owners' has content -->
+{% if owners %}
+<!-- Owners Table -->
+    <table>
+        <tr>
+            <th>Floor Space</th>
+            <th>Floors</th>
+            <th>Bedrooms</th>
+            <th>Bathrooms</th>
+            <th>Land Size</th>
+            <th>Year Constructed</th>
+            <th>Home ID</th>
+            <th>Home Price</th>
+            <th>Home Type</th>
+            <th>Owner</th>
+            <th>City</th>
+            <th>Preowned</th>
+            <th>Appliances</th>
+        </tr>
+        {% for owner in owners %}
+        <tr>
+            <td>{{ owner.floorSpace }}</td>
+            <td>{{ owner.floors }}</td>
+            <td>{{ owner.bedRooms }}</td>
+            <td>{{ owner.bathRooms }}</td>
+            <td>{{ owner.landSize }}</td>
+            <td>{{ owner.yearConstructed }}</td>
+            <td>{{ owner.homeId }}</td>
+            <td>{{ owner.price }}</td>
+            <td>{{ owner.htype }}</td>
+            <td>{{ owner.owner }}</td>
+            <td>{{ owner.city }}</td>
+            <td>{{ owner.preowned }}</td>
+            <td>{{ owner.appliances }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+<!-- Messages Table -->
+{% if messages %}
+    <table>
+        {% for message in messages %}
+        <tr>
+            <td>{{ message }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+
+<!-- Results and Dictionary Outputs -->
+{% if result %}
+    <h3>{{ result }}</h3>
+    {% endif %}
+
+    {% if dict %}
+    <table>
+        {% for key, value in dict.items %}
+        <tr>
+            <th>{{ key }}</th>
+            <td>{{ value }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endif %}
+</div>
+{% endif %}
 
 
 
-!-- Make Owner Modal -->
+<!-- Make Owner Modal -->
 <div class="modal" id="makeOwnerModal">
     <div class="modal-content">
         <span class="close" onclick="closeMakeOwnerForm()">&times;</span>
@@ -183,12 +258,15 @@
             <label for="homeId">Home ID:</label>
             <input type="number" id="homeId" name="homeId" required><br>
 
+            <label for="new_price">Price:</label>
+            <input type="text" id="new_price" name="new_price" required><br>
+
             <label for="owner">New Owner ID:</label>
             <input type="text" id="owner" name="owner" required><br>
 
             <label for="ownername">New Owner Name:</label>
              <input type="text" id="ownername" name="ownername" required><br>
-            
+
             <label for="owner_age">New Owner Age:</label>
             <input type="number" id="owner_age" name="owner_age" required><br>
 
@@ -197,28 +275,15 @@
 
             <input type="submit" value="Make Owner">
         </form>
+               <!-- type dictionary starts here -->
+       
     </div>
 </div>
 
+
     <script>
-        // Sample data for agents and owners
-        {% comment %} var agents = ["Agna Antony", "Chaitra Kalasavalli", "Gowthami Gundala"]; {% endcomment %}
-        {% comment %} var owners = ["ys", "yam"]; {% endcomment %}
-
-        // Populate agent and owner select elements
-        function populateSelect(selectId, options) {
-            var selectElement = document.getElementById(selectId);
-            options.forEach(function(option) {
-                var optionElement = document.createElement("option");
-                optionElement.value = option;
-                optionElement.textContent = option;
-                selectElement.appendChild(optionElement);
-            });
-        }
-
-        {% comment %} populateSelect("agent-select", agents); {% endcomment %}
-        {% comment %} populateSelect("owner-select", owners); {% endcomment %}
-
+        const filterDropdown = document.getElementById('query');
+        
         // Functions to show and close add agent form
         function showAddAgentForm() {
             document.getElementById("addAgentModal").style.display = "block";
@@ -227,6 +292,7 @@
         function closeAddAgentForm() {
             document.getElementById("addAgentModal").style.display = "none";
         }
+
 
         // Function to handle adding agent (console log for now)
         function addAgent() {
@@ -257,6 +323,7 @@
             document.getElementById("addHomeModal").style.display = "none";
         }
 
+
         // Function to handle adding home (console log for now)
         function addHome() {
             var address = document.getElementById("homeAddress").value;
@@ -274,8 +341,6 @@
             var appliances = document.getElementById("appliances").value;
             var city = document.getElementById("city").value;
             var landsize = document.getElementById("landSize").value;
-            var status = document.getElementById("status").value;
-
 
 
 
@@ -296,7 +361,6 @@
             console.log("Appliances:", appliances);
             console.log("Land Size:", landsize);
             console.log("City:", city);
-            console.log("Status:", status);
 
             closeAddHomeForm();
         }
@@ -329,22 +393,197 @@
         function makeOwner() {
             var homeId = document.getElementById("homeId").value;
             var ownerId = document.getElementById("owner").value;
-            var ownername = document.getElementById("ownername").value;
-            var ownerAge = document.getElementById("owner_age").value;
-            var ownerProfession = document.getElementById("owner_profession").value;
 
             // Here you would typically send this data to the server to update the home's owner
-            console.log("Making owner:", ownerId);
-            console.log("Home ID:", homeId);
-            console.log("Name:", ownername);
-            console.log("Age:", ownerAge);
-            console.log("Profession:", ownerProfession);
+            console.log("Making owner:", ownerId, "for home ID:", homeId);
 
             closeMakeOwnerForm();
         }
 
         
+
+
+
+        filterDropdown.addEventListener('change', function() {
+            const selectedFilter = this.value;
+            showDynamicForm(selectedFilter);
+        });
+
+        function showDynamicForm(selectedFilter) {
+            const formContainer = document.getElementById('form-container');
+            const dynamicForm = document.getElementById('dynamic-form');
+            // Hide the form container if no filter is selected
+            if (!selectedFilter) {
+                formContainer.classList.add('hidden');
+                return;
+            }
+            if (dynamicForm) {
+            // Clear any existing form fields
+                dynamicForm.innerHTML = '';
+            }
+            console.log("Selected filter", selectedFilter);
+            let htmlContent = '';
+            // Create form fields based on the selected filter
+            switch (selectedFilter) {
+                case 'q2':
+                    dynamicForm.action='/homes_sold_morethan_one_q2'
+                    htmlContent=`<h3>Click on submit to find homes sold more than once.</h3> <br> <form><input type="submit" value="Submit"></form>`
+                    break;
+                case 'q4':
+                    dynamicForm.action='/appliance_maker_q4'
+                    htmlContent=`<h3>Enter appliance maker and click on submit to find homes with that appliance</h3> <br> <form><input type="text" id="maker" name="maker"><input type="submit" value="Submit"></form>`
+                    break;
+                case 'q6':
+                    dynamicForm.action='/agent_commission_q6'
+                    htmlContent=`<h3>Enter agent id and click on submit to find commission for each agents</h3> <br> <form><input type="text" id="agentId" name="agentId"><input type="submit" value="Submit"></form>`
+                    break;
+                case 'q7':
+                    dynamicForm.action='/apartment_and_mansion_q7'
+                    htmlContent=
+                        `<h3>Click on submit to find owners who own apertments and mansion</h3> <br> <form><input type="submit" value="Submit"></form>`;
+                    break;
+
+                case 'q8':
+                dynamicForm.action='/home_lt_price_q8'
+                htmlContent=`<h3>Enter price and city name</h3><br>
+                <form><div class="form-grop">
+                    <label for="city">City:</label>
+                            <select name="city" id="city">
+                                <option value="">Any</option>
+                                <option value="Auburn Hills">Auburn Hills</option>
+                                <option value="Troy">Troy</option>
+                                <option value="Rochester">Rochester</option>
+                                <!-- Add more options if needed -->
+                            </select>
+
+                </div>
+                <div class="form-grop">
+                    <label for="price">Max Price:</label>
+                    <input type="text" id="price" name="price" required>
+                </div>
+                <input type="submit" value="Submit"></form>`
+                // Add cases for other filters as needed
+                break;
+                case 'q9':
+                    dynamicForm.action='/expensive_home_every_city_q9'
+                    htmlContent=
+                        `<h3>Click on submit to find all the expensive homes in all the cities</h3> <br> <form><input type="submit" value="Submit"></form>`;
+                    break;
+                case 'q10':
+                    dynamicForm.action='/filter_homes'
+                    htmlContent = `<div id="homefilter">
+                        <form method="POST" id="filterHomeForm">
+                            <div class="form-grop">
+                            <label for="bedrooms">Bedrooms:</label>
+                            <select name="bedrooms" id="bedrooms">
+                                <option value="">Any</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <!-- Add more options if needed -->
+                            </select>
+                        </div>
+                            <br>
+                            <div class="form-grop">
+                            <label for="bathrooms">Bathrooms:</label>
+                            <select name="bathrooms" id="bathrooms">
+                                <option value="">Any</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <!-- Add more options if needed -->
+                            </select>
+                        </div>
+                            <br>
+                            <div class="form-grop">
+                            <label for="max-price">Max Price in $:</label>
+                            <select name="max-price" id="max-price">
+                                <option value="">Any</option>
+                                <option value="100000">100000</option>
+                                <option value="200000">200000</option>
+                                <option value="300000">300000</option>
+                                <option value="400000">400000</option>
+                                <option value="500000">500000</option>
+                                <!-- Add more options if needed -->
+                            </select>
+                        </div>
+                            <br>
+                            <div class="form-grop">
+                            <label for="home-type">Home Type:</label>
+                            <select name="home-type" id="home-type">
+                                <option value="">Any</option>
+                                <option value="Single Family">Single Family</option>
+                                <option value="Apartment">Apartment</option>
+                                <option value="Condo">Condo</option>
+                                <!-- Add more options if needed -->
+                            </select>
+                        </div>
+                            <br>
+                            <div class="form-grop">
+                            <label for="city">City:</label>
+                            <select name="city" id="city">
+                                <option value="">Any</option>
+                                <option value="Auburn Hills">Auburn Hills</option>
+                                <option value="Troy">Troy</option>
+                                <option value="Rochester">Rochester</option>
+                                <!-- Add more options if needed -->
+                            </select>
+                        </div>
+                            <br>
+                            <input type="submit" value="Submit">
+                        </form>
+                    </div>
+                `
+                    break;
+                case 'q5':
+                    dynamicForm.action='/find_owners_q5'
+                    htmlContent=
+                        `<h3>Click on submit to find owners who do not own homes they previously owned</h3> <br> <form><input type="submit" value="Submit"></form>`;
+                    break;
+
+                case 'q1':
+                dynamicForm.action='/list_homes_owned_by_owner_in_city'
+                htmlContent=`<h3>Enter owner name and city name</h3><br>
+                <form><div class="form-grop">
+                    <label for="city">City:</label>
+                            <select name="city" id="city">
+                                <option value="">Any</option>
+                                <option value="Auburn Hills">Auburn Hills</option>
+                                <option value="Troy">Troy</option>
+                                <option value="Rochester">Rochester</option>
+                                <!-- Add more options if needed -->
+                            </select>
+
+                </div>
+                <div class="form-grop">
+                    <label for="owner">Owner:</label>
+                    <input type="text" id="owner" name="owner" required>
+                </div>
+                <input type="submit" value="Submit"></form>`
+                // Add cases for other filters as needed
+                break;
+
+                case 'q3':
+                dynamicForm.action='/expensive_home_q3'
+                htmlContent=`<h3>Click on submit to find most expensive homes</h3> <br> <form><input type="submit" value="Submit"></form>`
+                break;
+            }
+
+            if (dynamicForm) {
+                dynamicForm.innerHTML = htmlContent;
+            } else {
+                console.error("Target element not found.");
+            }
+
+            // Show the form containerfdadfad
+            formContainer.classList.remove('hidden');
+        }
         
     </script>
+    
 </body>
 </html>
