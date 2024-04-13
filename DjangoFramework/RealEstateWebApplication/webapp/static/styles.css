@@ -1,24 +1,82 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+/* Add button styles */
+.button {
+    display: inline-block;
+    padding: 2px 4px; /* Reduced padding for smaller buttons */
+    margin: 0 3px;
+    border: 2px solid #4CAF50;
+    border-radius: 3px;
+    background-color: #4CAF50;
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px; /* Adjust font size as needed to make the text smaller */
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Button hover effectf */
+.button:hover {
+    background-color: white; /* White background */
+    color: #4CAF50; /* Green text */
+    border-color: #4CAF50; /* Green border */
+}
+
+
+
 body {
+    width: 100vw;
+    height: 100vh;
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
-.container {
-    width: 100%;
-    min-height: 100vh;
-    background-color: #333; /* Dark gray color */
-    color: #fff; /* Text color */
+.header {
+    width: 80vw;
+    height: 85px;
+    margin: 1% 2% 1% 1%;
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nlinks {
+    text-decoration: none;
+    padding: 24px;
+    color: black;
+    text-transform: uppercase;
+    font-size: 0.8em;
+}
+
+.hidden {
+    display: none;
 }
 
 .title-panel {
-    background-color: #007bff;
-    color: white;
-    padding: 20px;
+    background-color: #afb5e1a8;
+    color: rgb(40, 27, 162);
+    padding: 20px 25px; /* Decreased padding on the sides */
     border-radius: 10px 10px 0 0;
     text-align: center;
+    margin: 25px auto 0; /* Center the title-panel horizontally and add margin to the top */
+    width: calc(100% - 50px); /* Adjusted width to accommodate margins */
+}
+
+
+.back-container {
+    background-image: url('images/bg1.jpg');
+    background-size: cover;
+    background-position: center;
+    width: 100vw;
+    min-height: 80vh;
+    display: flex; /* Make container flex */
+    align-items: flex-start; /* Align items from the top */
 }
 
 .nav-bar {
@@ -30,58 +88,70 @@ body {
     margin-bottom: 20px;
 }
 
-.side-bar {
-    width: 250px;
-    background-color: #4CAF50;
-    padding: 20px;
-    border-radius: 5px;
-    color: white;
+.container {
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+    width: auto;
+    min-height: 80vh;
+    background-color: #7abd5966;
+    color: #3a12ea; /* Text color */
+    margin-top: 20px;
+    margin-left: 20px;
 }
 
+.side-bar {
+    width: 250px;
+    background-color: #283593; /* Change to a different color */
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: 100vh;
+    border-right: 4px solid #1565c0; /* Add border to the right */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add shadow effect */
+}
+
+
 .side-bar button {
-    display: block;
     width: 100%;
     margin-bottom: 10px;
     padding: 10px;
-    background-color: #ff6f00;
+    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    font-size: 14px; /* Set font size */
+    transition: all 0.3s ease; /* Add transition effect */
 }
 
 .side-bar button:hover {
-    background-color: #ff8f00;
+    background-color: #4CAF50;
+    transform: scale(1.1); /* Scale button on hover */
 }
 
-.search-area {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
+.predefined {
+    width: 100%;
+    height: fit-content;
+    top: 70%;
+    right: 50%;
 }
 
-.search-area input,
-.search-area select {
-    padding: 10px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+.query-div {
+    position: relative;
+    z-index: 1; /* Sit on top */
+    left: 50%;
+    top: 50%;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
-.search-area button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.search-area button:hover {
-    background-color: #0056b3;
-}
-
-/* Modal styles  */ 
+/* Modal styles */
 .modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
@@ -91,7 +161,7 @@ body {
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
 .modal-content {
@@ -117,3 +187,60 @@ body {
     text-decoration: none;
     cursor: pointer;
 }
+
+select {
+    width: 200px; /* Set the desired width */
+}
+
+/* Adjust form labels and input fields */
+form label {
+    display: inline-block;
+    width: 150px; /* Set a fixed width for labels */
+    text-align: right; /* Align labels to the right */
+    margin-right: 10px; /* Add some right margin */
+}
+
+form input,
+form select {
+    width: 200px; /* Set a fixed width for input fields */
+    margin-bottom: 10px; /* Add some bottom margin */
+}
+
+form button[type="submit"] {
+    width: auto; /* Let the button width be determined by its content */
+    margin-top: 10px; /* Add some top mafffrgin */
+}
+
+div#hello {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 999;
+    width: 50%; /* or whatever width you prefer */
+    max-width: 1200px; /* maximum width the container can have */
+    overflow-x: auto; /* allows horizontal scrolling if the table is wider than the screen */
+    padding: 20px; /* optional: adds some space inside the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* optional: adds some shadow for depth */
+    background: #fff; /* optional: in case you want a different background */
+    border-radius: 10px; /* optional: if you want rounded corners */
+}
+
+table {
+    width: 60%; /* Set table to take full width of its container */
+    border-collapse: collapse; /* Collapse borders */
+    margin-bottom: 20px; /* Space below each table */
+  }
+  
+  th, td {
+    border: 1px solid #ddd; /* Add border to table cells */
+    padding: 8px; /* Padding inside cells */
+    text-align: left; /* Align text to the left */
+  }
+  
+  th {
+    background-color: #f2f2f2; /* Background color for header cells */
+    text-transform: uppercase; /* Make header text uppercase */
+  }
+  
+
