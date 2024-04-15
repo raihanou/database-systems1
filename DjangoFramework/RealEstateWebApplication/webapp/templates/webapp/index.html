@@ -230,15 +230,25 @@
 
 <!-- Results and Dictionary Outputs -->
 {% if result %}
-    <h3>{{ result }}</h3>
-    {% endif %}
+    <h3>hello</h3>
+    <table>
+        <tr>
+            <td>{{ result }}</td>
+        </tr>
+    </table>
+{% endif %}
+    
 
     {% if dict %}
     <table>
         {% for key, value in dict.items %}
         <tr>
-            <th>{{ key }}</th>
-            <td>{{ value }}</td>
+            <th>home-id</th>
+            <th>owner-details</th>
+        </tr>
+        <tr>
+            <td>{{key}}</td>
+            <td>{{value}}</td>
         </tr>
         {% endfor %}
     </table>
