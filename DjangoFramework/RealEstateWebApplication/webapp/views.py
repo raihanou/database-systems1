@@ -209,7 +209,7 @@ def list_homes_owned_by_owner_in_city(request):
         city_name = request.POST.get('city')
         homes = Homes.get_homes_owned_by_owner_in_city(owner_name, city_name)
         context['homes'] = homes
-    return render(request, "webapp/index.html", {'messages': homes})
+    return render(request, "webapp/index.html", {'documents': homes})
 
 #q2-List all the homes that were sold more than once
 @csrf_exempt
@@ -227,7 +227,7 @@ def expensive_home_q3(request):
     if request.method == 'POST':
         query_result = Homes.get_most_expensive_home_for_owner()
         context['homes'] = query_result
-    return render(request, "webapp/index.html", {'messages': query_result})
+    return render(request, "webapp/index.html", {'owners': query_result})
 
 #q4- Find all the homes that include all e appliances by the same maker.
 @csrf_exempt
@@ -248,7 +248,7 @@ def agent_commission_q6(request):
         id = request.POST.get('agentId')
         query_result = Agents.get_commission(id)
         msg = "Total Commission earned is "+str(query_result)
-    return render(request, "webapp/index.html", {'result': msg})
+    return render(request, "webapp/index.html", {'result': query_result})
 
 #q7- Find people who own apartments as well as mansions.
 @csrf_exempt
@@ -257,7 +257,7 @@ def apartment_and_mansion_q7(request):
     if request.method == 'POST':
         query_result = Homes.get_People_With_Apts_Mansions()
         context['homes'] = query_result
-    return render(request, "webapp/index.html", {'messages': query_result})
+    return render(request, "webapp/index.html", {'owners': query_result})
 
 #q8- List all the homes below a price in a given city.expensive_home_every_city_q9
 @csrf_exempt
@@ -268,7 +268,7 @@ def home_lt_price_q8(request):
         city_name = request.POST.get('city')
         homes = Homes.get_homes_below_price_in_given_city(city_name,price)
         context['homes'] = homes
-    return render(request, "webapp/index.html", {'messages': homes})
+    return render(request, "webapp/index.html", {'owners': homes})
       
 
 #q9- List owners who own all the most expensive homes in a given city
